@@ -3,9 +3,10 @@ from bs4 import BeautifulSoup
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
 
+load_dotenv()
 serpapi_key = os.getenv('SERPAPI_KEY')
+
 
 def search_all_links(base_url, keyword, num_results=5):
     api_key = serpapi_key
@@ -32,6 +33,7 @@ def search_all_links(base_url, keyword, num_results=5):
         print("Error occurred while fetching search results.")
         return None
 
+
 def scrape_text_from_url(url):
     try:
         response = requests.get(url)
@@ -40,10 +42,8 @@ def scrape_text_from_url(url):
 
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        for script_or_style in soup(['script', 'style', 'header', 'footer', 'nav', 'aside', 'form', '[document]', 'noscript']):
-            script_or_style.extract()
 
-        elements = soup.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', "div"])
+        elements = soup.find_all(["div"])
 
         text = '\n'.join([element.get_text(separator=" ", strip=True) for element in elements])
 
@@ -52,11 +52,13 @@ def scrape_text_from_url(url):
         print(f"Error occurred while scraping the article: {e}")
         return None
 
+
 def save_text_to_file(text, filename):
     utils_directory = os.path.dirname(__file__)  
     filepath = os.path.join(utils_directory, filename)
     with open(filepath, 'w', encoding='utf-8') as file:
         file.write(text)
+
 
 def scrape_data():
     base_url = "timesofindia.indiatimes.com"
@@ -77,6 +79,7 @@ def scrape_data():
                 filename = f"article_{i + 1}.txt"
                 save_text_to_file(text, filename)
                 print(f"Saved scraped text to {filename}\n")
+
 
 if __name__ == "__main__":
     scrape_data()
