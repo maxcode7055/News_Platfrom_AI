@@ -21,12 +21,11 @@ def search_all_links(base_url, keyword, num_results=5):
     if response.status_code == 200:
         results = response.json().get("organic_results", [])
         links = [result['link'] for result in results]
-        print(links,"/"*80)
+        print(links, "/" * 80)
         return links
     else:
         print("Error occurred while fetching search results.")
         return None
-
 
 def scrape_text_from_url(url):
     try:
@@ -53,24 +52,26 @@ def scrape_text_from_url(url):
         print(f"Error occurred while scraping the article: {e}")
         return None
 
-
 def save_text_to_file(text, filename):
-    with open(filename, 'w', encoding='utf-8') as file:
+    # Ensure that the path to the utils directory is correct
+    utils_directory = os.path.join(os.path.dirname(__file__), 'utils')
+    os.makedirs(utils_directory, exist_ok=True)
+    filepath = os.path.join(utils_directory, filename)
+    with open(filepath, 'w', encoding='utf-8') as file:
         file.write(text)
 
-
-def main():
+def scrape_data():
     base_url = "timesofindia.indiatimes.com"
-    keyword = "cricket"
+    keyword = "technology related to ai"
     all_links = search_all_links(base_url, keyword, num_results=10)
 
     if all_links:
-        print("All links related to 'cricket':")
+        print("All links related to 'Politics':")
         for link in all_links:
             print(link)
 
         print("\nScraping articles...\n")
-        
+
         for i, url in enumerate(all_links):
             print(f"Scraping URL {i + 1}: {url}")
             text = scrape_text_from_url(url)
@@ -79,6 +80,6 @@ def main():
                 save_text_to_file(text, filename)
                 print(f"Saved scraped text to {filename}\n")
 
-
 if __name__ == "__main__":
-    main()
+    scrape_data()
+
