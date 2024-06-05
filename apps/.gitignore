@@ -10,9 +10,9 @@ htmlcov/
 docs/_build/
 .myenv*/
 myenv*/
-# apps/services/__pycache__/
-# apps/utils/__pycache__/
-# apps/routes/__pycache__/
-# apps/db/__pycache__/
-# apps/__pycache__/
-# apps/middleware/__pycache__/
+apps/services/__pycache__/
+apps/utils/__pycache__/
+apps/routes/__pycache__/
+apps/db/__pycache__/
+apps/__pycache__/
+apps/middleware/__pycache__/
