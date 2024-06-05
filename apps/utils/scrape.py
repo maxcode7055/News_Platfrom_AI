@@ -1,9 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+serpapi_key = os.getenv('SERPAPI_KEY')
 
 def search_all_links(base_url, keyword, num_results=5):
-    api_key = "31b31eafbec0aedaaf48e8ebf8d2baa55faff180c67ae66e95007895ddc560c1"
+    api_key = serpapi_key
     search_engine = "google"
     serpapi_url = "https://serpapi.com/search"
 
