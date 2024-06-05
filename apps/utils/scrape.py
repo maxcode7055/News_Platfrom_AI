@@ -29,22 +29,17 @@ def search_all_links(base_url, keyword, num_results=5):
 
 def scrape_text_from_url(url):
     try:
-        # Fetch the content from the URL
         response = requests.get(url)
         if response.status_code != 200:
             raise Exception(f"Failed to fetch page content: {response.status_code}")
 
-        # Parse the content with BeautifulSoup
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        # Define a function to remove unwanted elements like scripts and styles
         for script_or_style in soup(['script', 'style', 'header', 'footer', 'nav', 'aside', 'form', '[document]', 'noscript']):
             script_or_style.extract()
 
-        # Extract text from all elements that may contain content
         elements = soup.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', "div"])
 
-        # Combine text from all selected elements
         text = '\n'.join([element.get_text(separator=" ", strip=True) for element in elements])
 
         return text.strip()
@@ -53,9 +48,7 @@ def scrape_text_from_url(url):
         return None
 
 def save_text_to_file(text, filename):
-    # Ensure that the path to the utils directory is correct
-    utils_directory = os.path.join(os.path.dirname(__file__), 'utils')
-    os.makedirs(utils_directory, exist_ok=True)
+    utils_directory = os.path.dirname(__file__)  
     filepath = os.path.join(utils_directory, filename)
     with open(filepath, 'w', encoding='utf-8') as file:
         file.write(text)
