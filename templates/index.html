@@ -34,7 +34,6 @@
                 <input type="text" id="keyword" name="keyword" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary">Search</button>
-            <!-- Loader -->
             <div class="loader mt-3 text-center">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">Loading...</span>
@@ -44,11 +43,10 @@
         </form>
     </div>
 
-    <!-- Bootstrap JS (Optional) -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script>
         function showLoader() {
-            document.querySelector('.loader').style.display = 'block'; // Show the loader when form is submitted
+            document.querySelector('.loader').style.display = 'block'; 
         }
     </script>
 </body>
