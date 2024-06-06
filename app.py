@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from apps.utils.scrape import scrape_data
+from apps.utils.scrape import *
 
 app = Flask(__name__)
 
@@ -17,3 +17,5 @@ def scrape():
 if __name__ == '__main__':
     print("Starting the application...")
     app.run(debug=True)
+
+
