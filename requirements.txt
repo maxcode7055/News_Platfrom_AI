@@ -1,5 +1,6 @@
 Flask==3.0.3
 gunicorn==20.1.0
+python-dotenv==1.0.1
 beautifulsoup4==4.12.3
 certifi==2024.6.2
 charset-normalizer==3.3.2
