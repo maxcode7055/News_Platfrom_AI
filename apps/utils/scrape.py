@@ -2,11 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 import os
 from dotenv import load_dotenv
-
+import hashlib
 
 load_dotenv()
 serpapi_key = os.getenv('SERPAPI_KEY')
-
 
 def search_all_links(base_url, keyword, num_results=5):
     api_key = serpapi_key
@@ -33,7 +32,6 @@ def search_all_links(base_url, keyword, num_results=5):
         print("Error occurred while fetching search results.")
         return None
 
-
 def scrape_text_from_url(url):
     try:
         response = requests.get(url)
@@ -41,7 +39,6 @@ def scrape_text_from_url(url):
             raise Exception(f"Failed to fetch page content: {response.status_code}")
 
         soup = BeautifulSoup(response.content, 'html.parser')
-
 
         elements = soup.find_all(["div"])
 
@@ -52,21 +49,18 @@ def scrape_text_from_url(url):
         print(f"Error occurred while scraping the article: {e}")
         return None
 
-
 def save_text_to_file(text, filename):
-    utils_directory = os.path.dirname(__file__)  
-    filepath = os.path.join(utils_directory, filename)
-    with open(filepath, 'w', encoding='utf-8') as file:
+    with open(filename, 'w', encoding='utf-8') as file:
         file.write(text)
+    print(f"Saved article to {filename}")
 
-
-def scrape_data():
+def scrape_data(keyword):
     base_url = "timesofindia.indiatimes.com"
-    keyword = "technology related to ai"
     all_links = search_all_links(base_url, keyword, num_results=10)
 
+    scraped_data = []
     if all_links:
-        print("All links related to 'Politics':")
+        print(f"All links related to '{keyword}':")
         for link in all_links:
             print(link)
 
@@ -76,11 +70,12 @@ def scrape_data():
             print(f"Scraping URL {i + 1}: {url}")
             text = scrape_text_from_url(url)
             if text:
-                filename = f"article_{i + 1}.txt"
+                filename = f"article_{i+1}.txt"  
                 save_text_to_file(text, filename)
-                print(f"Saved scraped text to {filename}\n")
+                
+                scraped_data.append({
+                    'url': url,
+                    'text': text
+                })
 
-
-if __name__ == "__main__":
-    scrape_data()
-
+    return scraped_data
