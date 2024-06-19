@@ -216,23 +216,23 @@ async def search_news():
         tasks = []
         for result in news_results:
             tasks.append(fetch_and_translate(result["link"], result.get("snippet", ""), detect(result.get("snippet", ""))))
-    languages = {
-        "English": "en_XX",
-        "Farsi (Persian)": "fa_IR",
-        "French": "fr_XX",
-        "Polish": "pl_PL",
-        "Somali": "so_SO",
-        "Spanish": "es_XX",
-        "Turkish": "tr_TR"
-    }
+        languages = {
+            "English": "en_XX",
+            "Farsi (Persian)": "fa_IR",
+            "French": "fr_XX",
+            "Polish": "pl_PL",
+            "Somali": "so_SO",
+            "Spanish": "es_XX",
+            "Turkish": "tr_TR"
+        }
 
-for lang, lang_code in languages.items():
-    translated_text = translate_text(english_text, model, tokenizer, lang_code)
-    print(f"Translation in {lang}:\n{translated_text[0]}\n")
+        for lang, lang_code in languages.items():
+            translated_text = translate_text(english_text, model, tokenizer, lang_code)
+            print(f"Translation in {lang}:\n{translated_text[0]}\n")
 
-        translated_news_items = await asyncio.gather(*tasks)
+            translated_news_items = await asyncio.gather(*tasks)
 
-        return jsonify(translated_news_items)
+            return jsonify(translated_news_items)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
