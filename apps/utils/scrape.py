@@ -73,6 +73,7 @@ def scrape_news(keyword, month, from_day, to_day, year):
         params = {
             "q": keyword,
             "tbm": "nws",
+            "engine": "google", 
             "num": "10",  # Fetching 10 results for faster processing
             "tbs": tbs_param,
             "api_key": os.getenv('SERPAPI_KEY')
