@@ -7,21 +7,27 @@ def download_model():
     return model, tokenizer
 
 def translate_text(text, model, tokenizer, target_lang):
-    tokenizer.src_lang = "en_XX"  # English
-    tokenizer.tgt_lang = target_lang  # Target language
-    encoded_text = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
-    generated_tokens = model.generate(**encoded_text, forced_bos_token_id=tokenizer.lang_code_to_id[target_lang])
-    out = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
-    return out
+    tokenizer.src_lang = "en_XX"  
+    tokenizer.tgt_lang = target_lang 
+
+    if target_lang in tokenizer.lang_code_to_id:
+        encoded_text = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
+        generated_tokens = model.generate(
+            **encoded_text,
+            forced_bos_token_id=tokenizer.lang_code_to_id[target_lang]
+        )
+
+        out = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
+        return out
+    else:
+        return ["Translation not available for this language code."]
 
 model, tokenizer = download_model()
 
-# Example text to be translated
 text = input("Enter Your Text for translation...")
 
 english_text = f"""{text}"""
 
-# Define the target languages
 languages = {
     "English": "en_XX",
     "Farsi (Persian)": "fa_IR",
@@ -32,7 +38,6 @@ languages = {
     "Turkish": "tr_TR"
 }
 
-# Translate text to each language and print the result
 for lang, lang_code in languages.items():
     translated_text = translate_text(english_text, model, tokenizer, lang_code)
     print(f"Translation in {lang}:\n{translated_text[0]}\n")
