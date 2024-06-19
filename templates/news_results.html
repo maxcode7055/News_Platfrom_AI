@@ -4,26 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News Results</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .news-item {
+            background-color: #ffffff;
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .news-item h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+            font-size: 25px
+        }
+        .news-item p {
+            margin-bottom: 8px;
+        }
+        .news-item img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .news-item a {
+            color: #007bff;
+        }
+        .news-results {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 <body>
-    <h1>News Results</h1>
-    <div>
-        {% for item in news_data %}
-        <div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
-            <h2>{{ item.title }}</h2>
-            <p><strong>Date:</strong> {{ item.date }}</p>
-            <p><strong>Source:</strong> {{ item.source }}</p>
-            <p><strong>Snippet:</strong> {{ item.snippet }}</p>
-            {% if item.full_content %}
-            <p><strong>Full Content:</strong></p>
-            <p>{{ item.full_content }}</p>
-            {% endif %}
-            <p><strong>Link:</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
-            {% if item.thumbnail %}
-            <p><img src="{{ item.thumbnail }}" alt="Thumbnail"></p>
-            {% endif %}
+    <div class="container">
+        <div class="news-results">
+            <h1 class="mt-4 mb-4">News Results</h1>
         </div>
-        {% endfor %}
+        <div>
+            {% for item in news_data %}
+            <div class="news-item">
+                <h2>{{ item.title }}</h2>
+                <p><strong>Date:</strong> {{ item.date }}</p>
+                <p><strong>Source:</strong> {{ item.source }}</p>
+                <p><strong>Snippet:</strong> {{ item.snippet }}</p>
+                {% if item.full_content %}
+                <p><strong>Full Content:</strong></p>
+                <p>{{ item.full_content }}</p>
+                {% endif %}
+                <p><strong>Link:</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
+                {% if item.thumbnail %}
+                <p><img src="{{ item.thumbnail }}" alt="Thumbnail"></p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
     </div>
+
+    <!-- Bootstrap JS and dependencies (if needed) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
