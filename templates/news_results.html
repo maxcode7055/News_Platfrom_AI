@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Results</title>
+</head>
+<body>
+    <h1>News Results</h1>
+    <div>
+        {% for item in news_data %}
+        <div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
+            <h2>{{ item.title }}</h2>
+            <p><strong>Date:</strong> {{ item.date }}</p>
+            <p><strong>Source:</strong> {{ item.source }}</p>
+            <p><strong>Snippet:</strong> {{ item.snippet }}</p>
+            {% if item.full_content %}
+            <p><strong>Full Content:</strong></p>
+            <p>{{ item.full_content }}</p>
+            {% endif %}
+            <p><strong>Link:</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
+            {% if item.thumbnail %}
+            <p><img src="{{ item.thumbnail }}" alt="Thumbnail"></p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
