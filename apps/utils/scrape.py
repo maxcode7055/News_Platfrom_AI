@@ -57,7 +57,6 @@ def fetch_article_content(url, snippet):
         return None, f"Error fetching article content: {str(e)}"
 
 
-
 def scrape_news(keyword, month, from_day, to_day, year):
     try:
         tbs_param = ""
@@ -93,8 +92,12 @@ def scrape_news(keyword, month, from_day, to_day, year):
                 full_content, error_message = future.result()
 
                 if full_content is not None and full_content != "":
-                    news_item["full_content"] = full_content
-                    response_data.append(news_item)
+                    # Check if full_content has less than 30 words
+                    if len(full_content.split()) >= 30:
+                        news_item["full_content"] = full_content
+                        response_data.append(news_item)
+                    else:
+                        print(f"Skipping '{news_item['title']}': Full content has less than 30 words.")
                 else:
                     # Optionally, you can include error handling or logging here
                     print(f"Failed to fetch full content for '{news_item['title']}': {error_message}")
@@ -103,5 +106,3 @@ def scrape_news(keyword, month, from_day, to_day, year):
 
     except Exception as e:
         raise e
-
-
