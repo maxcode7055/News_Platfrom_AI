@@ -59,3 +59,5 @@ transformers==4.41.2
 triton==2.3.0
 typing_extensions==4.12.1
 urllib3==2.2.1
+serpapi==0.6.5
+google-search-results
