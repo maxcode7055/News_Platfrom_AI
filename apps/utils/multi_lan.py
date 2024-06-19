@@ -122,7 +122,6 @@
 #     pprint(results)
 
 
-
 import torch
 from transformers import M2M100Tokenizer, M2M100ForConditionalGeneration
 from langdetect import detect
@@ -163,6 +162,21 @@ async def translate_text_async(text, model, tokenizer, src_lang, target_lang, ma
     )
     out = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
     return out
+def translate_text(text, model, tokenizer, target_lang):
+    tokenizer.src_lang = "en_XX"  
+    tokenizer.tgt_lang = target_lang 
+
+    if target_lang in tokenizer.lang_code_to_id:
+        encoded_text = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
+        generated_tokens = model.generate(
+            **encoded_text,
+            forced_bos_token_id=tokenizer.lang_code_to_id[target_lang]
+        )
+
+        out = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
+        return out
+    else:
+        return ["Translation not available for this language code."]
 
 @app.route('/search_news', methods=['POST'])
 async def search_news():
@@ -185,6 +199,8 @@ async def search_news():
             elif year:
                 tbs_param = f"cdr:1,cd_min:1/1/{year},cd_max:12/31/{year}"
 
+        text = input("Enter Your Text for translation...")
+
         params = {
             "q": keyword,
             "tbm": "nws",
@@ -200,6 +216,19 @@ async def search_news():
         tasks = []
         for result in news_results:
             tasks.append(fetch_and_translate(result["link"], result.get("snippet", ""), detect(result.get("snippet", ""))))
+    languages = {
+        "English": "en_XX",
+        "Farsi (Persian)": "fa_IR",
+        "French": "fr_XX",
+        "Polish": "pl_PL",
+        "Somali": "so_SO",
+        "Spanish": "es_XX",
+        "Turkish": "tr_TR"
+    }
+
+for lang, lang_code in languages.items():
+    translated_text = translate_text(english_text, model, tokenizer, lang_code)
+    print(f"Translation in {lang}:\n{translated_text[0]}\n")
 
         translated_news_items = await asyncio.gather(*tasks)
 
