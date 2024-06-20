@@ -58,7 +58,7 @@
             {% for item in news_data %}
             <div class="news-item">
                 <h2>{{ item.title }}</h2>
-                <p><strong>Date:</strong> {{ item.publish_date }}</p>
+                <p><strong>Date:</strong> {{ item.date }}</p>
                 <p><strong>Source:</strong> {{ item.source }}</p>
                 <p><strong>Snippet:</strong> {{ item.snippet }}</p>
                 {% if item.full_content %}
