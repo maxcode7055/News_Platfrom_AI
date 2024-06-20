@@ -61,3 +61,5 @@ typing_extensions==4.12.1
 urllib3==2.2.1
 serpapi==0.1.5
 google-search-results
+newspaper3k==0.2.8
+lxml_html_clean==0.1.1
