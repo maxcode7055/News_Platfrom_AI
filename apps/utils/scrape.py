@@ -70,7 +70,7 @@ def convert_relative_date(date_str):
     if date_str:
         parsed_date = dateparser.parse(date_str)
         if parsed_date:
-            return parsed_date.strftime("%Y-%m-%d %H:%M:%S")
+            return parsed_date.strftime("%Y-%m-%d")
     return date_str
 
 def scrape_news(keyword, month, from_day, to_day, year):
