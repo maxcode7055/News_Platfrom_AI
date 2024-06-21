@@ -64,3 +64,4 @@ google-search-results
 newspaper3k==0.2.8
 lxml_html_clean==0.1.1
 dateparser==1.2.0
+deep-translator==1.11.4
