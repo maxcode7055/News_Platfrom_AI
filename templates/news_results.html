@@ -60,7 +60,7 @@
                 <h2>{{ item.title }}</h2>
                 <p><strong>Date:</strong> {{ item.date }}</p>
                 <p><strong>Source:</strong> {{ item.source }}</p>
-                <p><strong>Snippet:</strong> {{ item.snippet }}</p>
+                <!-- <p><strong>Snippet:</strong> {{ item.snippet }}</p> -->
                 {% if item.full_content %}
                 <p><strong>Full Content:</strong></p>
                 <p>{{ item.full_content }}</p>
@@ -68,8 +68,10 @@
                 {% if item.top_image %}
                 <p><img src="{{ item.top_image }}" alt="Thumbnail"></p>
                 {% endif %}
-                <p><strong>Link:</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p>
+                <!-- <p><strong>Link:</strong> <a href="{{ item.link }}" target="_blank">{{ item.link }}</a></p> -->
+                {% if item.authors %}
                 <p><strong>Authors:</strong> {{ item.authors }}</p>
+                {% endif %}
             </div>
             {% endfor %}
         </div>
@@ -79,3 +81,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
